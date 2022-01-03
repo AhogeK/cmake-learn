@@ -4,6 +4,7 @@
 ## 目录
 * [Step 1](#step-1)
 * [Step 2](#step-2)
+* [Step 3](#step-3)
 
 ## Step 1
 
@@ -268,3 +269,95 @@ cmake --build .
 [返回目录](#目录)
 
 ---
+
+## Step 3
+
+Step3/CmakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+
+# set the project name
+project(Tutorial VERSION 1.0)
+
+# specify the c++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
+option(USE_MYMATH "Use tutorial provided math implementation" ON)
+
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file(TutorialConfig.h.in TutorialConfig.h)
+
+# conditionally execute a group of commands
+if (USE_MYMATH)
+
+    # add the MathFunctions library
+    add_subdirectory(MathFunctions)
+
+    # The list subcommands APPEND, INSERT, FILTER, PREPEND, POP_BACK, POP_FRONT, REMOVE_AT, REMOVE_ITEM,
+    #   REMOVE_DUPLICATES, REVERSE and SORT may create new values for the list within the current CMake variable scope.
+    #   Similar to the set() command, the LIST command creates new variable values in the current scope, even if the
+    #   list itself is actually defined in a parent scope.
+    list(APPEND EXTRA_LIBS MathFunctions)
+
+    # if we use target_include_directories on MathFunctions don't need this
+    # list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
+endif ()
+
+# add the MathFunctions library
+# add_subdirectory(MathFunctions)
+
+# add the executable
+add_executable(Tutorial tutorial.cpp)
+
+# EXTRA_LIBS come from 'list(APPEND EXTRA_LIBS MathFunctions)'
+target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
+
+# do not use conditionally
+# target_include_libraries(Tutorial PUBLIC MathFunctions)
+
+# add the binary tree to the search path for include files
+# so that we will find TutorialConfig.h
+target_include_directories(Tutorial PUBLIC
+        "${PROJECT_BINARY_DIR}"
+        # "${PROJECT_SOURCE_DIR}/MathFunctions"
+        # id.
+        # ${EXTRA_INCLUDES}
+        )
+```
+
+> 取消了Step2中的 "EXTRA_INCLUDES", 该操作直接在 MathFunctions 的 lib Cmake 中进行
+
+Step3/tutorial.cxx Step3/TutorialConfig.h.in
+
+**以上两个文件与 Step2 无异**
+
+Step3/MathFunctions/CMakeLists.txt
+
+```cmake
+# add the following one line CMakeLists.txt file to the MathFunctions directory
+add_library(MathFunctions mysqrt.cpp)
+
+# state that anybody linking to us needs to include the current source dir
+# to find MathFunctions.h, while we don't.
+target_include_directories(MathFunctions
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+```
+
+> 添加了 target_include_directories 作用与 Step2 中主体中的 target_include_directories 相同
+
+**另外 MathFunctions.h 与 mysqrt.cpp 文件不变**
+
+### 测试
+
+```shell
+cd Step3
+mkdir build
+cd build
+cmake ..
+cmake --build .
+./Tutorial 4
+```
