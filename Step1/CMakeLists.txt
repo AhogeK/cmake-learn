@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
-# add the excutable
+# add the executable
 add_executable(Tutorial tutorial.cxx)
 
 # add the binary tree to the search path for include files
