@@ -81,6 +81,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 ```
+[std:stod documentation](https://cplusplus.com/reference/string/stod/)
 
 > 测试主程序
 
