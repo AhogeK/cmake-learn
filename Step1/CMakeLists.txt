@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
+# https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # add the executable

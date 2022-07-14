@@ -23,6 +23,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
+# https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # add the executable
@@ -40,9 +41,15 @@ target_include_directories(Tutorial PUBLIC
 Step1/TutorialConfig.h.in
 
 ```c
-// the configured options and settings for Tutorial
-#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
-#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+/*
+ * the configured options and settings for Tutorial
+ * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MAJOR.html
+ * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MINOR.html
+ */
+#define
+Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define
+Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
 ```
 
 > cmake configure_file 指令 用于在编译时自动修改@@内容

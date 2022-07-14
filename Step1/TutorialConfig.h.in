@@ -1,6 +1,7 @@
 /*
  * the configured options and settings for Tutorial
  * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MAJOR.html
+ * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MINOR.html
  */
 #define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
