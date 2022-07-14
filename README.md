@@ -31,9 +31,11 @@ add_executable(Tutorial tutorial.cxx)
 
 # add the binary tree to the search path for include files
 # so that we will find TutorialConfig.h
+# https://cmake.org/cmake/help/latest/command/target_include_directories.html?highlight=target_include_directories
+# https://cmake.org/cmake/help/latest/variable/PROJECT_BINARY_DIR.html?highlight=project_binary_dir
 target_include_directories(Tutorial PUBLIC
-	                   "${PROJECT_BINARY_DIR}"
-			   )
+        "${PROJECT_BINARY_DIR}"
+        )
 ```
 
 > cmake 配置文件
