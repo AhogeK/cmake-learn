@@ -8,14 +8,14 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
-option(USE_MYMATH "Use tutorial provided math implementation" ON)
+option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # conditionally execute a group of commands
-if (USE_MYMATH)
+if (USE_MY_MATH)
 
     # add the MathFunctions library
     add_subdirectory(MathFunctions)
