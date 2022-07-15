@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 
-#include <TutorialConfig.h>
+#include "TutorialConfig.h"
 
-#ifdef USE_MYMATH
+#ifdef USE_MY_MATH
 #include <MathFunctions.h>
 #endif
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     // convert input to double
     const double inputValue = std::stod(argv[1]);
-#ifdef USE_MYMATH
+#ifdef USE_MY_MATH
     cout << "use my math" << endl;
     const double outputValue = mysqrt(inputValue);
 #else

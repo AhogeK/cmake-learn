@@ -8,14 +8,15 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
-option(USE_MYMATH "Use tutorial provided math implementation" ON)
+# https://cmake.org/cmake/help/latest/command/option.html
+option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # conditionally execute a group of commands
-if (USE_MYMATH)
+if (USE_MY_MATH)
 
     # add the MathFunctions library
     add_subdirectory(MathFunctions)
@@ -24,6 +25,7 @@ if (USE_MYMATH)
     #   REMOVE_DUPLICATES, REVERSE and SORT may create new values for the list within the current CMake variable scope.
     #   Similar to the set() command, the LIST command creates new variable values in the current scope, even if the
     #   list itself is actually defined in a parent scope.
+    # https://cmake.org/cmake/help/latest/command/list.html
     list(APPEND EXTRA_LIBS MathFunctions)
     list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 endif ()

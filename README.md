@@ -117,14 +117,15 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
-option(USE_MYMATH "Use tutorial provided math implementation" ON)
+# https://cmake.org/cmake/help/latest/command/option.html
+option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # conditionally execute a group of commands
-if (USE_MYMATH)
+if (USE_MY_MATH)
 
     # add the MathFunctions library
     add_subdirectory(MathFunctions)
@@ -133,6 +134,7 @@ if (USE_MYMATH)
     #   REMOVE_DUPLICATES, REVERSE and SORT may create new values for the list within the current CMake variable scope.
     #   Similar to the set() command, the LIST command creates new variable values in the current scope, even if the
     #   list itself is actually defined in a parent scope.
+    # https://cmake.org/cmake/help/latest/command/list.html
     list(APPEND EXTRA_LIBS MathFunctions)
     list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 endif ()
@@ -165,7 +167,7 @@ Step2/TutorialConfig.h.in
 // the configured options and settings for Tutorial
 #define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
-#cmakedefine USE_MYMATH
+#cmakedefine USE_MY_MATH
 ```
 > 添加上述option的定义
 
@@ -179,7 +181,7 @@ Step2/tutorial.cxx
 
 #include <TutorialConfig.h>
 
-#ifdef USE_MYMATH
+#ifdef USE_MY_MATH
 #include <MathFunctions.h>
 #endif
 
@@ -196,7 +198,7 @@ int main(int argc, char *argv[]) {
 
     // convert input to double
     const double inputValue = std::stod(argv[1]);
-#ifdef USE_MYMATH
+#ifdef USE_MY_MATH
     cout << "use my math" << endl;
     const double outputValue = mysqrt(inputValue);
 #else
@@ -271,7 +273,7 @@ cmake ..
 cmake --build .
 ./Tutorial 4
 # 相当与 cmake 配置文件中 option 选项里的 ON 改 OFF
-cmake .. -DUSE_MYMATH=OFF
+cmake .. -DUSE_MY_MATH=OFF
 cmake --build .
 ./Tutorial 4
 ```
@@ -295,14 +297,14 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
-option(USE_MYMATH "Use tutorial provided math implementation" ON)
+option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # conditionally execute a group of commands
-if (USE_MYMATH)
+if (USE_MY_MATH)
 
     # add the MathFunctions library
     add_subdirectory(MathFunctions)
@@ -391,14 +393,14 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
-option(USE_MYMATH "Use tutorial provided math implementation" ON)
+option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # conditionally execute a group of commands
-if (USE_MYMATH)
+if (USE_MY_MATH)
 
     # add the MathFunctions library
     add_subdirectory(MathFunctions)
