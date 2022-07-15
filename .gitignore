@@ -184,3 +184,6 @@ gen
 # build folder
 *_build
 build
+
+# vim
+*.swp
