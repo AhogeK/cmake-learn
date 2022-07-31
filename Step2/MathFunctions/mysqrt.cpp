@@ -3,7 +3,7 @@
 //
 #include <iostream>
 
-// a hack square root calculation using simple operations
+// 一个简单的平方根操作计算
 double mysqrt(double x) {
     if (x <= 0) {
         return 0;
@@ -11,7 +11,7 @@ double mysqrt(double x) {
 
     double result = x;
 
-    // do ten iterations
+    // 进行十次遍历
     for (int i = 0; i < 10; ++i) {
         if (result <= 0) {
             result = 0.1;
