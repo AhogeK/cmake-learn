@@ -92,7 +92,9 @@ cd Step1
 mkdir build
 cd build
 cmake ..
+# cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja  -G Ninja -S .. -B .
 cmake --build .
+# cmake --build . --target Tutorial -j 6
 # 成功演示
 ./Tutorial 20
 # 失败演示
