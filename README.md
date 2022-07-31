@@ -440,6 +440,7 @@ target_include_directories(Tutorial PUBLIC
         )
 
 # add the install targets
+# https://cmake.org/cmake/help/latest/guide/tutorial/Installing%20and%20Testing.html
 install(TARGETS Tutorial DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
         DESTINATION include
