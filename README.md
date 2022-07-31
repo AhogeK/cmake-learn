@@ -352,59 +352,34 @@ Step4/CmakeLists.txt
 ```cmake
 cmake_minimum_required(VERSION 3.10)
 
-# set the project name
 project(Tutorial VERSION 1.0)
 
-# specify the c++ standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# for larger projects this is a common occurrence. The first step is to add an option to the top-level CMakeLists.txt file
 option(USE_MY_MATH "Use tutorial provided math implementation" ON)
 
-# configure a header file to pass some of the CMake settings
-# to the source code
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
-# conditionally execute a group of commands
 if (USE_MY_MATH)
 
-    # add the MathFunctions library
     add_subdirectory(MathFunctions)
 
-    # The list subcommands APPEND, INSERT, FILTER, PREPEND, POP_BACK, POP_FRONT, REMOVE_AT, REMOVE_ITEM,
-    #   REMOVE_DUPLICATES, REVERSE and SORT may create new values for the list within the current CMake variable scope.
-    #   Similar to the set() command, the LIST command creates new variable values in the current scope, even if the
-    #   list itself is actually defined in a parent scope.
     list(APPEND EXTRA_LIBS MathFunctions)
 
-    # if we use target_include_directories on MathFunctions don't need this
-    # list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 endif ()
 
-# add the MathFunctions library
-# add_subdirectory(MathFunctions)
-
-# add the executable
 add_executable(Tutorial tutorial.cxx)
 
-# EXTRA_LIBS come from 'list(APPEND EXTRA_LIBS MathFunctions)'
 target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 
-# do not use conditionally
-# target_include_libraries(Tutorial PUBLIC MathFunctions)
-
-# add the binary tree to the search path for include files
-# so that we will find TutorialConfig.h
 target_include_directories(Tutorial PUBLIC
         "${PROJECT_BINARY_DIR}"
-        # "${PROJECT_SOURCE_DIR}/MathFunctions"
-        # id.
-        # ${EXTRA_INCLUDES}
         )
 
-# add the install targets
-# https://cmake.org/cmake/help/latest/guide/tutorial/Installing%20and%20Testing.html
+# 安装选项
+# https://cmake.org/cmake/help/latest/command/install.html?highlight=install
+# https://cmake.org/cmake/help/latest/guide/tutorial/Installing%20and%20Testing.html?highlight=install
 install(TARGETS Tutorial DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
         DESTINATION include
@@ -412,16 +387,20 @@ install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
 
 enable_testing()
 
-# does the application run
+# 测试程序
+# https://cmake.org/cmake/help/latest/command/add_test.html?highlight=add_test
 add_test(NAME Runs COMMAND Tutorial 25)
 
-# does the usage message work?
+# 自定义通过规则
+# https://cmake.org/cmake/help/latest/command/set_tests_properties.html?highlight=set_tests_properties
+# https://cmake.org/cmake/help/latest/prop_test/PASS_REGULAR_EXPRESSION.html?highlight=pass_regular_expression
 add_test(NAME Usage COMMAND Tutorial)
 set_tests_properties(Usage
         PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*number"
         )
 
-# define a function to simplify adding tests
+# 定义一个函数来简化添加测试
+# https://cmake.org/cmake/help/latest/command/function.html?highlight=function
 function(do_test target arg result)
     add_test(NAME Comp${arg} COMMAND ${target} ${arg})
     set_tests_properties(Comp${arg}
@@ -429,7 +408,7 @@ function(do_test target arg result)
             )
 endfunction()
 
-# do a bunch of result based tests
+# 做一组结果比较测试
 do_test(Tutorial 4 "4 is 2")
 do_test(Tutorial 9 "9 is 3")
 do_test(Tutorial 5 "5 is 2.236")
@@ -450,15 +429,12 @@ do_test(Tutorial 0.0001 "0.0001 is 0.01")
 Step4/MathFunctions/CMakeList.txt
 
 ```cmake
-# add the following one line CMakeLists.txt file to the MathFunctions directory
 add_library(MathFunctions mysqrt.cpp)
 
-# state that anybody linking to us needs to include the current source dir
-# to find MathFunctions.h, while we don't.
 target_include_directories(MathFunctions
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# install rules
+# 安装规则
 install(TARGETS MathFunctions DESTINATION lib)
 install(FILES MathFunctions.h DESTINATION include)
 ```
