@@ -27,6 +27,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 # add the executable
+# https://cmake.org/cmake/help/latest/command/add_executable.html?highlight=add_executable
 add_executable(Tutorial tutorial.cxx)
 
 # add the binary tree to the search path for include files
