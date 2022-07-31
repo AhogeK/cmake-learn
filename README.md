@@ -12,26 +12,25 @@
 Step1/CMakeLists.txt
 
 ```cmake
+# cmake 的最低要求版本号
 cmake_minimum_required(VERSION 3.10)
 
-# set the project name
+# 设置项目名称
 project(Tutorial VERSION 1.0)
 
-# specify the c++ standard
+# 指定C++标准版本
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# configure a header file to pass some of the CMake settings
-# to the source code
+# 配置cmake头文件，用于设置一些头属性变量
 # https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
-# add the executable
+# 添加可执行文件
 # https://cmake.org/cmake/help/latest/command/add_executable.html?highlight=add_executable
 add_executable(Tutorial tutorial.cxx)
 
-# add the binary tree to the search path for include files
-# so that we will find TutorialConfig.h
+# 添加依赖目录，用于查询例如上面configure_file生成的头文件
 # https://cmake.org/cmake/help/latest/command/target_include_directories.html?highlight=target_include_directories
 # https://cmake.org/cmake/help/latest/variable/PROJECT_BINARY_DIR.html?highlight=project_binary_dir
 target_include_directories(Tutorial PUBLIC
@@ -43,16 +42,18 @@ target_include_directories(Tutorial PUBLIC
 
 Step1/TutorialConfig.h.in
 
-```c
+```c++
 /*
- * the configured options and settings for Tutorial
+ * 配置一些头文件的属性变量
  * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MAJOR.html
  * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MINOR.html
  */
-#define
+#cmakedefine
 Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define
-Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+Tutorial_VERSION_MINOR ${
+Tutorial_VERSION_MINOR
+}
 ```
 
 > cmake configure_file 指令 用于在编译时自动修改@@内容
@@ -60,8 +61,6 @@ Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
 Step1/tutorial.cxx
 
 ```c++
-// A simple program that computes the square root of a number
-
 #include <iostream>
 #include <string>
 
@@ -69,20 +68,21 @@ Step1/tutorial.cxx
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
-		// report version
+		// 输出版本号
 		std::cout << argv[0] << " Version " << Tutorial_VERSION_MAJOR << "."
 			<< Tutorial_VERSION_MINOR << std::endl;
 		std::cout << "Usage: " << argv[0] << " [number]" << std::endl;
 		return 1;
 	}
 
-	// convert input to double
+	// 将输入转换为double
 	const double inputValue = std::stod(argv[1]);
     std::cout << "input value: " << inputValue << std::endl;
     return 0;
 }
 ```
-[std:stod documentation](https://cplusplus.com/reference/string/stod/)
+
+[c++ std:stod 函数](https://cplusplus.com/reference/string/stod/)
 
 > 测试主程序
 
