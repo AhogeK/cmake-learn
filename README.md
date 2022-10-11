@@ -51,9 +51,7 @@ Step1/TutorialConfig.h.in
 #cmakedefine
 Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define
-Tutorial_VERSION_MINOR ${
-Tutorial_VERSION_MINOR
-}
+Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
 ```
 
 > cmake configure_file 指令 用于在编译时自动修改@@内容
