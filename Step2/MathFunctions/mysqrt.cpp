@@ -10,12 +10,8 @@ std::string format_double(double value, int precision) {
     out << value;
     std::string result = out.str();
 
-    // 省略多余的0
+    // 移除多余的0
     while (result.find('.') != std::string::npos && (result.back() == '0' || result.back() == '.')) {
-        if (result.back() == '.') {
-            result.pop_back();
-            break;
-        }
         result.pop_back();
     }
 
