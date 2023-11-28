@@ -57,7 +57,7 @@ TutorialConfig.h.in 文件中的对应位置，生成 TutorialConfig.h 文件。
 
 ### **命令结构**
 
-```
+```cmake
 target_include_directories(<target> <PRIVATE|PUBLIC|INTERFACE> <dir1> <dir2> ...)
 ```
 
@@ -70,7 +70,7 @@ target_include_directories(<target> <PRIVATE|PUBLIC|INTERFACE> <dir1> <dir2> ...
 
 ### **示例解释**
 
-```
+```cmake
 target_include_directories(Tutorial PUBLIC
         "${PROJECT_BINARY_DIR}"
         )
@@ -110,9 +110,7 @@ Step1/TutorialConfig.h.in
 #cmakedefine
 Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define
-Tutorial_VERSION_MINOR ${
-Tutorial_VERSION_MINOR
-}
+Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
 ```
 
 在 CMake 的 **`configure_file`** 命令中，**`#define`** 和 **`#cmakedefine`** 用于在配置文件中设置预处理器指令。这些指令在
@@ -127,7 +125,7 @@ CMake 处理模板文件（如 **`TutorialConfig.h.in`**）并生成配置文件
 
 示例：
 
-```
+```c++
 #cmakedefine Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 ```
 
@@ -142,7 +140,7 @@ CMake 处理模板文件（如 **`TutorialConfig.h.in`**）并生成配置文件
 
 示例：
 
-```
+```c++
 #define Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
 ```
 
