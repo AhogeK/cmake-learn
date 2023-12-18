@@ -73,7 +73,7 @@ target_include_directories(<target> <PRIVATE|PUBLIC|INTERFACE> <dir1> <dir2> ...
 ```cmake
 target_include_directories(Tutorial PUBLIC
         "${PROJECT_BINARY_DIR}"
-        )
+)
 ```
 
 - **`Tutorial`** 是你的目标名称，比如一个库或可执行文件。
@@ -110,7 +110,9 @@ Step1/TutorialConfig.h.in
 #cmakedefine
 Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define
-Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
+Tutorial_VERSION_MINOR ${
+Tutorial_VERSION_MINOR
+}
 ```
 
 在 CMake 的 **`configure_file`** 命令中，**`#define`** 和 **`#cmakedefine`** 用于在配置文件中设置预处理器指令。这些指令在
@@ -200,9 +202,12 @@ cmake --build .
 `cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S .. -B .`
 
 1. **`cmake`**: 这是调用 CMake 命令行工具的基本命令。
-2. **`DCMAKE_BUILD_TYPE=Debug`**: 这个选项设置了一个 CMake 变量 **`CMAKE_BUILD_TYPE`** 的值为 **`Debug`**。这意味着构建系统将会配置为 Debug 模式，通常包括了详细的调试信息和不进行优化。
-3. **`DCMAKE_MAKE_PROGRAM=ninja`**: 这里又设置了一个 CMake 变量 **`CMAKE_MAKE_PROGRAM`**，其值被设置为 **`ninja`**。这告诉 CMake 使用 Ninja 作为构建工具而不是默认的 Make。Ninja 是一个专注于速度的小型构建系统。
-4. **`G Ninja`**: **`G`** 选项指定了要生成的构建系统的类型。这里指定的是 **`Ninja`**，意味着 CMake 将会生成 Ninja 构建文件。Ninja 是一种流行的高性能构建系统，与 Make 类似，但在很多情况下更快。
+2. **`DCMAKE_BUILD_TYPE=Debug`**: 这个选项设置了一个 CMake 变量 **`CMAKE_BUILD_TYPE`** 的值为 **`Debug`**。这意味着构建系统将会配置为
+   Debug 模式，通常包括了详细的调试信息和不进行优化。
+3. **`DCMAKE_MAKE_PROGRAM=ninja`**: 这里又设置了一个 CMake 变量 **`CMAKE_MAKE_PROGRAM`**，其值被设置为 **`ninja`**。这告诉
+   CMake 使用 Ninja 作为构建工具而不是默认的 Make。Ninja 是一个专注于速度的小型构建系统。
+4. **`G Ninja`**: **`G`** 选项指定了要生成的构建系统的类型。这里指定的是 **`Ninja`**，意味着 CMake 将会生成 Ninja
+   构建文件。Ninja 是一种流行的高性能构建系统，与 Make 类似，但在很多情况下更快。
 5. **`S ..`**: **`S`** 指定了源代码目录的路径。这里的 **`..`** 指的是当前目录的上一级目录，也就是项目的根目录。
 6. **`B .`**: **`B`** 指定了用于存放构建文件（例如 Makefile 或 Ninja 构建文件）的目录。这里的 **`.`** 表示当前目录。
 
@@ -210,10 +215,12 @@ cmake --build .
 
 1. **`cmake --build .`**：
     - **`cmake --build`** 是用来调用 CMake 的构建系统的命令。
-    - **`.`** 指定了构建目录，即当前目录。这意味着 CMake 将在当前目录中查找生成的构建系统文件（例如 Makefile 或 Ninja 构建文件），并使用它来构建项目。
+    - **`.`** 指定了构建目录，即当前目录。这意味着 CMake 将在当前目录中查找生成的构建系统文件（例如 Makefile 或 Ninja
+      构建文件），并使用它来构建项目。
 2. **`-target Tutorial`**：
     - **`-target`** 指定了要构建的目标。在这个例子中，目标是 **`Tutorial`**。
-    - **`Tutorial`** 可能是您的项目中定义的一个可执行文件、库或者自定义的目标。这个选项告诉 CMake 仅构建 **`Tutorial`** 目标，而不是整个项目的所有目标。
+    - **`Tutorial`** 可能是您的项目中定义的一个可执行文件、库或者自定义的目标。这个选项告诉 CMake 仅构建 **`Tutorial`**
+      目标，而不是整个项目的所有目标。
 3. **`j 6`**：
     - **`j`** 选项用于指定并行作业的数量，在这里是 6。
     - 这意味着构建系统将尝试并行执行最多 6 个编译任务，以加快构建过程。这对于多核心计算机来说非常有用，因为它可以显著减少构建项目所需的总时间。
@@ -359,22 +366,22 @@ Step2/MathFunctions/mysqrt.cpp
 
 // 一个简单的平方根操作计算
 double mysqrt(double x) {
-    if (x <= 0) {
-        return 0;
-    }
+if (x <= 0) {
+return 0;
+}
 
-    double result = x;
+double result = x;
 
-    // 进行十次遍历
-    for (int i = 0; i < 10; ++i) {
-        if (result <= 0) {
-            result = 0.1;
-        }
-        double delta = x - (result * result);
-        result = result + 0.5 * delta / result;
-        std::cout << "Computing sqrt of " << x << " to be " << result << std::endl;
-    }
-    return result;
+// 进行十次遍历
+for (int i = 0; i < 10; ++i) {
+if (result <= 0) {
+result = 0.1;
+}
+double delta = x - (result * result);
+result = result + 0.5 * delta / result;
+std::cout << "Computing sqrt of " << x << " to be " << result << std::endl;
+}
+return result;
 }
 ```
 
@@ -542,6 +549,26 @@ do_test(Tutorial -25 "-25 is (-nan|nan|0)")
 do_test(Tutorial 0.0001 "0.0001 is 0.01")
 ```
 
+install 命令是 CMake 中用于指定安装步骤的配置。它们定义了当您构建并安装项目时，文件和目标（如可执行文件、库、头文件等）应该被复制到哪里。
+
+``install(TARGETS Tutorial DESTINATION bin)``
+
+* `TARGETS Tutorial` 指定了要安装的目标。在这个例子中，`Tutorial` 是一个由 `add_executable` 或 `add_library` 在 CMake
+  脚本中创建的目标。这可能是一个可执行文件或一个库。
+* `DESTINATION bin` 指定了安装位置。这里的 `bin` 通常是一个相对于安装前缀的路径。如果您使用 `make install` 或类似的命令安装您的项目，
+  `Tutorial` 目标（例如一个可执行文件）将被复制到安装前缀下的 `bin` 目录中。安装前缀通常是 /usr/local（在 Unix-like
+  系统上）或者一个由您或者系统管理员定义的路径。
+
+``install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)``
+
+* `FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"`
+  指定了要安装的文件。在这个例子中，它是项目二进制目录下的 `TutorialConfig.h`
+  文件。这个文件可能是由配置步骤（例如 `configure_file` 命令）生成的，或者是项目中的一个普通文件。
+* `DESTINATION include` 指定了安装位置。这里的 `include` 是一个相对于安装前缀的路径。这意味着 `TutorialConfig.h`
+  文件将被复制到安装前缀下的 `include` 目录中。这通常用于安装头文件，使得其他项目可以在编译时包含这些头文件。
+
+`enable_testing()` 用在项目中启动测试，允许使用 `add_test()`
+
 > 这一节主要添加了测试，这一节用到了很多测试相关的 CMake 指令。
 > 详细可以查阅 | [install](https://cmake.org/cmake/help/latest/command/install.html) |
 > [enable_testing](https://cmake.org/cmake/help/latest/command/enable_testing.html?highlight=enable_testing) |
@@ -571,11 +598,12 @@ install(FILES MathFunctions.h DESTINATION include)
 
 ```shell
 cd Step4
-mkdir build
-cd build
-cmake ..
+mkdir cmake-build-debug
+cd cmake-build-debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S .. -B .
+cmake --build . --target Tutorial -j 8
 # prefix自定义地址，编译测试用文件 默认会在 /usr/local/bin 中去构建 需要权限不建议
-cmake --instal . --prefix "/home/ahogek/Documents/learn-workspace/cmake-learn/Step4/build"
+cmake --instal . --prefix $(pwd)
 ctest
 ```
 
