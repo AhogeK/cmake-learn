@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     const double inputValue = std::stod(argv[1]);
 #ifdef USE_MY_MATH
     cout << "use my math" << endl;
-    const double outputValue = mysqrt(inputValue);
+    const string &outputValue = format_double(mysqrt(inputValue), 16);
 #else
     cout << "use c math" << endl;
     const double outputValue = sqrt(inputValue);
