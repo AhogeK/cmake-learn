@@ -256,9 +256,6 @@ add_executable(Tutorial tutorial.cxx)
 
 target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 
-# 可以使用下面这样的写法来直接添加一个库
-# target_include_libraries(Tutorial PUBLIC MathFunctions)
-
 target_include_directories(Tutorial PUBLIC
         "${PROJECT_BINARY_DIR}"
         # "${PROJECT_SOURCE_DIR}/MathFunctions"
