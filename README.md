@@ -127,8 +127,7 @@ CMake 处理模板文件（如 **`TutorialConfig.h.in`**）并生成配置文件
 #cmakedefine Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 ```
 
-- 这表示如果 **`Tutorial_VERSION_MAJOR`** 变量在 CMake 中被定义，那么在生成的文件中将包含一行 *
-  *`#define Tutorial_VERSION_MAJOR`**，后面跟着这个变量的值。
+- 这表示如果 **`Tutorial_VERSION_MAJOR`** 变量在 CMake 中被定义，那么在生成的文件中将包含一行 **`#define Tutorial_VERSION_MAJOR`**，后面跟着这个变量的值。
 - 如果 **`Tutorial_VERSION_MAJOR`** 没有定义，那么这行将以注释形式出现或者不出现。
 
 ### **`#define`**
@@ -183,16 +182,13 @@ int main(int argc, char* argv[]) {
 
 ```shell
 cd Step1
-mkdir build
-cd build
-cmake ..
-# cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja  -G Ninja -S .. -B .
-cmake --build .
-# cmake --build . --target Tutorial -j 6
+mkdir cmake-build-debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B cmake-build-debug
+cmake --build cmake-build-debug --target Tutorial -j 10
 # 成功演示
-./Tutorial 20
+./cmake-build-debug/Tutorial 20
 # 失败演示
-./Tutorial
+./cmake-build-debug/Tutorial
 ```
 
 `cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S .. -B .`
