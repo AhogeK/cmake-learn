@@ -107,10 +107,8 @@ Step1/TutorialConfig.h.in
  * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MAJOR.html
  * https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION_MINOR.html
  */
-#cmakedefine
-Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
-#define
-Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
+#cmakedefine Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define Tutorial_VERSION_MINOR ${Tutorial_VERSION_MINOR}
 ```
 
 在 CMake 的 **`configure_file`** 命令中，**`#define`** 和 **`#cmakedefine`** 用于在配置文件中设置预处理器指令。这些指令在
